@@ -6,7 +6,7 @@
 # found to have been caused by the g++ compiler in the past. This seems to have
 # been fixed now by relaxing the optimization that g++ does, so although we'll
 # continue using clang++ (just in case), you can use g++ if you prefer.
-CXX=gcc
+CXX=clang++
 
 # call like 'DEBUGBUILD=1 make' to compile a debug version of AssaultCube.
 ifdef DEBUGBUILD
@@ -34,7 +34,7 @@ ifeq ($(ACDEBUG),yes)
 endif
 
 ifneq (,$(findstring clang,$(CXX)))
-	CXXFLAGS= -target x86_64-pc-windows-gnu -O3 -fomit-frame-pointer
+	CXXFLAGS= -O3 -fomit-frame-pointer
 	override CXXFLAGS+= -Wall -fsigned-char
 else
 	CXXFLAGS= -O3 -fomit-frame-pointer
@@ -57,7 +57,7 @@ MV=mv
 ifneq (,$(findstring MINGW,$(PLATFORM)))
 WINDRES= windres
 CLIENT_INCLUDES= $(INCLUDES) -I../include
-CLIENT_LIBS= -mwindows -lSDL2 -lSDL2_image -lzdll -lopengl32 -lenet -lOpenAL32 -lvorbisfile -lws2_32 -lwinmm
+CLIENT_LIBS= -L../lib -lSDL2main -lSDL2 -lSDL2_image -lzdll -lopengl32 -lenet -lOpenAL32 -lvorbisfile -lws2_32 -lwinmm
 else
 USRLIB=$(shell if [ -e /usr/lib64 ]; then echo "/usr/lib64"; else echo "/usr/lib"; fi)
 CLIENT_INCLUDES= $(INCLUDES) -I/usr/include `sdl2-config --cflags` -idirafter ../include

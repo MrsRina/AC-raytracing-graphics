@@ -1,29 +1,10 @@
 // rendergl.cpp: core opengl rendering stuff
 
+#include <iostream>
 #include "cube.h"
 #include "bot/bot.h"
 
 bool hasTE = false, hasMT = false, hasMDA = false, hasDRE = false, hasstencil = false, hasST2 = false, hasSTW = false, hasSTS = false, hasAF;
-
-// GL_ARB_multitexture
-PFNGLACTIVETEXTUREARBPROC       glActiveTexture_   = NULL;
-PFNGLCLIENTACTIVETEXTUREARBPROC glClientActiveTexture_ = NULL;
-PFNGLMULTITEXCOORD2FARBPROC     glMultiTexCoord2f_ = NULL;
-PFNGLMULTITEXCOORD3FARBPROC     glMultiTexCoord3f_ = NULL;
-
-// GL_EXT_multi_draw_arrays
-PFNGLMULTIDRAWARRAYSEXTPROC   glMultiDrawArrays_ = NULL;
-PFNGLMULTIDRAWELEMENTSEXTPROC glMultiDrawElements_ = NULL;
-
-// GL_EXT_draw_range_elements
-PFNGLDRAWRANGEELEMENTSEXTPROC glDrawRangeElements_ = NULL;
-
-// GL_EXT_stencil_two_side
-PFNGLACTIVESTENCILFACEEXTPROC glActiveStencilFace_ = NULL;
-
-// GL_ATI_separate_stencil
-PFNGLSTENCILOPSEPARATEATIPROC   glStencilOpSeparate_ = NULL;
-PFNGLSTENCILFUNCSEPARATEATIPROC glStencilFuncSeparate_ = NULL;
 
 void *getprocaddress(const char *name)
 {
@@ -63,17 +44,11 @@ void gl_checkextensions()
 
     if(hasext(exts, "GL_ARB_multitexture"))
     {
-        glActiveTexture_       = (PFNGLACTIVETEXTUREARBPROC)      getprocaddress("glActiveTextureARB");
-        glClientActiveTexture_ = (PFNGLCLIENTACTIVETEXTUREARBPROC)getprocaddress("glClientActiveTextureARB");
-        glMultiTexCoord2f_     = (PFNGLMULTITEXCOORD2FARBPROC)    getprocaddress("glMultiTexCoord2fARB");
-        glMultiTexCoord3f_     = (PFNGLMULTITEXCOORD3FARBPROC)    getprocaddress("glMultiTexCoord3fARB");
         hasMT = true;
     }
 
     if(hasext(exts, "GL_EXT_multi_draw_arrays"))
     {
-        glMultiDrawArrays_   = (PFNGLMULTIDRAWARRAYSEXTPROC)  getprocaddress("glMultiDrawArraysEXT");
-        glMultiDrawElements_ = (PFNGLMULTIDRAWELEMENTSEXTPROC)getprocaddress("glMultiDrawElementsEXT");
         hasMDA = true;
 
         if(strstr(vendor, "ATI") || strstr(renderer, "Mesa") || strstr(version, "Mesa")) ati_mda_bug = 1;
@@ -81,20 +56,16 @@ void gl_checkextensions()
 
     if(hasext(exts, "GL_EXT_draw_range_elements"))
     {
-        glDrawRangeElements_ = (PFNGLDRAWRANGEELEMENTSEXTPROC)getprocaddress("glDrawRangeElementsEXT");
         hasDRE = true;
     }
 
     if(hasext(exts, "GL_EXT_stencil_two_side"))
     {
-        glActiveStencilFace_ = (PFNGLACTIVESTENCILFACEEXTPROC)getprocaddress("glActiveStencilFaceEXT");
         hasST2 = true;
     }
 
     if(hasext(exts, "GL_ATI_separate_stencil"))
     {
-        glStencilOpSeparate_   = (PFNGLSTENCILOPSEPARATEATIPROC)  getprocaddress("glStencilOpSeparateATI");
-        glStencilFuncSeparate_ = (PFNGLSTENCILFUNCSEPARATEATIPROC)getprocaddress("glStencilFuncSeparateATI");
         hasSTS = true;
     }
 
@@ -149,7 +120,6 @@ void gl_init(int w, int h, int depth, int fsaa)
     glEnable(GL_CULL_FACE);
 
     inittmus();
-
     resetcamera();
 }
 
@@ -1129,7 +1099,6 @@ void gl_drawframe(int w, int h, float changelod, float curfps, int elapsed)
     WaypointClass.Think();// Rick: Need to do here because of drawing the waypoints
     
     drawhudgun();
-
     resettmu(0);
 
     glDisable(GL_CULL_FACE);

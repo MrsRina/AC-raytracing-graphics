@@ -151,7 +151,7 @@ void setupmultitexrefract(GLuint reflecttex, GLuint refracttex)
     glBindTexture(GL_TEXTURE_2D, refracttex);
     setprojtexmatrix();
 
-    glActiveTexture_(GL_TEXTURE1_ARB);
+    glActiveTexture(GL_TEXTURE1);
     glEnable(GL_TEXTURE_2D);
 
     setuptmu(1, "P , T @ C~a");
@@ -159,7 +159,7 @@ void setupmultitexrefract(GLuint reflecttex, GLuint refracttex)
     glBindTexture(GL_TEXTURE_2D, reflecttex);
     setprojtexmatrix();
 
-    glActiveTexture_(GL_TEXTURE0_ARB);
+    glActiveTexture(GL_TEXTURE0);
 }
 
 void setupmultitexreflect(GLuint reflecttex)
@@ -180,11 +180,11 @@ void cleanupmultitex(GLuint reflecttex, GLuint refracttex)
 
     if(refracttex)
     {
-        glActiveTexture_(GL_TEXTURE1_ARB);
+        glActiveTexture(GL_TEXTURE1);
         glDisable(GL_TEXTURE_2D);
         resettmu(1);
         glLoadIdentity();
-        glActiveTexture_(GL_TEXTURE0_ARB);
+        glActiveTexture(GL_TEXTURE0);
     }
     glMatrixMode(GL_MODELVIEW);
 }

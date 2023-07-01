@@ -50,10 +50,10 @@
     #define GL_GLEXT_LEGACY
     #define __glext_h__
     #define NO_SDL_GLEXT
-    #include <SDL_opengl.h>
+    #include "GL/glew.h"
     #undef __glext_h__
 
-    #include "GL/glext.h"
+    #include "GL/glew.h"
 
     #ifdef __APPLE__
         #include "OpenAL/al.h"

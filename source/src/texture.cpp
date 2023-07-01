@@ -813,10 +813,10 @@ void inittmus()
         maxtmus = max(1, min(MAXTMUS, int(val)));
         loopi(maxtmus)
         {
-            glActiveTexture_(GL_TEXTURE0_ARB+i);
+            glActiveTexture(GL_TEXTURE0+i);
             resettmu(i);
         }
-        glActiveTexture_(GL_TEXTURE0_ARB);
+        glActiveTexture(GL_TEXTURE0);
     }
 }
 

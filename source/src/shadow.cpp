@@ -337,19 +337,19 @@ void drawstencilshadows()
         {
             glEnable(GL_STENCIL_TEST_TWO_SIDE_EXT);
 
-            glActiveStencilFace_(GL_BACK);
+            glActiveStencilFaceEXT(GL_BACK);
             glStencilFunc(GL_ALWAYS, 0, ~0U);
-            glStencilOp(GL_KEEP, GL_KEEP, hasSTW ? GL_INCR_WRAP_EXT : GL_INCR);
+            glStencilOp(GL_KEEP, GL_KEEP, hasSTW ? GL_INCR_WRAP : GL_INCR);
 
-            glActiveStencilFace_(GL_FRONT);
+            glActiveStencilFaceEXT(GL_FRONT);
             glStencilFunc(GL_ALWAYS, 0, ~0U);
-            glStencilOp(GL_KEEP, GL_KEEP, hasSTW ? GL_DECR_WRAP_EXT : GL_DECR);
+            glStencilOp(GL_KEEP, GL_KEEP, hasSTW ? GL_DECR_WRAP : GL_DECR);
         }
         else
         {
-            glStencilFuncSeparate_(GL_ALWAYS, GL_ALWAYS, 0, ~0U);
-            glStencilOpSeparate_(GL_BACK, GL_KEEP, GL_KEEP, hasSTW ? GL_INCR_WRAP_EXT : GL_INCR);
-            glStencilOpSeparate_(GL_FRONT, GL_KEEP, GL_KEEP, hasSTW ? GL_DECR_WRAP_EXT : GL_DECR);
+            glStencilFuncSeparate(GL_ALWAYS, GL_ALWAYS, 0, ~0U);
+            glStencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, hasSTW ? GL_INCR_WRAP : GL_INCR);
+            glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_KEEP, hasSTW ? GL_DECR_WRAP : GL_DECR);
         }
 
         startmodelbatches();

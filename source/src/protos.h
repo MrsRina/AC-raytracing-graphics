@@ -92,26 +92,6 @@ struct makecert
 
 extern bool hasTE, hasMT, hasMDA, hasDRE, hasstencil, hasST2, hasSTW, hasSTS, hasAF;
 
-// GL_ARB_multitexture
-extern PFNGLACTIVETEXTUREARBPROC       glActiveTexture_;
-extern PFNGLCLIENTACTIVETEXTUREARBPROC glClientActiveTexture_;
-extern PFNGLMULTITEXCOORD2FARBPROC     glMultiTexCoord2f_;
-extern PFNGLMULTITEXCOORD3FARBPROC     glMultiTexCoord3f_;
-
-// GL_EXT_multi_draw_arrays
-extern PFNGLMULTIDRAWARRAYSEXTPROC   glMultiDrawArrays_;
-extern PFNGLMULTIDRAWELEMENTSEXTPROC glMultiDrawElements_;
-
-// GL_EXT_draw_range_elements
-extern PFNGLDRAWRANGEELEMENTSEXTPROC glDrawRangeElements_;
-
-// GL_EXT_stencil_two_side
-extern PFNGLACTIVESTENCILFACEEXTPROC glActiveStencilFace_;
-
-// GL_ATI_separate_stencil
-extern PFNGLSTENCILOPSEPARATEATIPROC   glStencilOpSeparate_;
-extern PFNGLSTENCILFUNCSEPARATEATIPROC glStencilFuncSeparate_;
-
 struct color
 {
     float r, g, b, alpha;

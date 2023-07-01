@@ -114,16 +114,16 @@ void setupexplosion()
     {
         setuptmu(0, "C * T", "= Ca");
 
-        glActiveTexture_(GL_TEXTURE1_ARB);
-        glClientActiveTexture_(GL_TEXTURE1_ARB);
+        glActiveTexture(GL_TEXTURE1);
+        glClientActiveTexture(GL_TEXTURE1);
 
         glEnable(GL_TEXTURE_2D);
         setuptmu(1, "P * Ta x 4", "Pa * Ta x 4");
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         glTexCoordPointer(2, GL_FLOAT, sizeof(expvert), &expverts->s);
 
-        glActiveTexture_(GL_TEXTURE0_ARB);
-        glClientActiveTexture_(GL_TEXTURE0_ARB);
+        glActiveTexture(GL_TEXTURE0);
+        glClientActiveTexture(GL_TEXTURE0);
 
         if(!expmodtex[0]) expmodtex[0] = createexpmodtex(64, 0);
         if(!expmodtex[1]) expmodtex[1] = createexpmodtex(64, 0.25f);
@@ -135,10 +135,10 @@ void drawexplosion(bool inside, float r, float g, float b, float a)
 {
     if(mtexplosion && maxtmus>=2 && lastexpmodtex != expmodtex[inside ? 1 : 0])
     {
-        glActiveTexture_(GL_TEXTURE1_ARB);
+        glActiveTexture(GL_TEXTURE1);
         lastexpmodtex = expmodtex[inside ? 1 :0];
         glBindTexture(GL_TEXTURE_2D, lastexpmodtex);
-        glActiveTexture_(GL_TEXTURE0_ARB);
+        glActiveTexture(GL_TEXTURE0);
     }
     loopi(!reflecting && inside ? 2 : 1)
     {
@@ -172,15 +172,15 @@ void cleanupexplosion()
     {
         resettmu(0);
 
-        glActiveTexture_(GL_TEXTURE1_ARB);
-        glClientActiveTexture_(GL_TEXTURE1_ARB);
+        glActiveTexture(GL_TEXTURE1);
+        glClientActiveTexture(GL_TEXTURE1);
 
         glDisable(GL_TEXTURE_2D);
         resettmu(1);
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-        glActiveTexture_(GL_TEXTURE0_ARB);
-        glClientActiveTexture_(GL_TEXTURE0_ARB);
+        glActiveTexture(GL_TEXTURE0);
+        glClientActiveTexture(GL_TEXTURE0);
     }
 }
 

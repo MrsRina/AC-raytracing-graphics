@@ -38,7 +38,7 @@ extern int ati_mda_bug;
 #define RENDERSTRIPS(strips, type) \
     if(strips.first.length()) \
     { \
-        if(hasMDA && !ati_mda_bug) glMultiDrawArrays_(type, strips.first.getbuf(), strips.count.getbuf(), strips.first.length()); \
+        if(hasMDA && !ati_mda_bug) glMultiDrawArrays(type, strips.first.getbuf(), strips.count.getbuf(), strips.first.length()); \
         else loopv(strips.first) glDrawArrays(type, strips.first[i], strips.count[i]); \
         strips.first.setsize(0); \
         strips.count.setsize(0); \

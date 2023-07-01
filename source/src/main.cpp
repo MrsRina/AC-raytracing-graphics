@@ -599,6 +599,11 @@ void setupscreen(int &useddepthbits, int &usedfsaa)
         0x4, 0x2, 0x1, /* try disabling two at a time */
         0 /* try disabling everything */
     };
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+
     int config = 0;
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 0);
     if(!depthbits) SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
@@ -633,6 +638,8 @@ void setupscreen(int &useddepthbits, int &usedfsaa)
         if(screen)
         {
             glcontext = SDL_GL_CreateContext(screen);
+            glewExperimental = true;
+            glewInit();
             if(glcontext) break;
             SDL_DestroyWindow(screen);
         }
