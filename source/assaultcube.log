@@ -1,1 +1,61 @@
-﻿  assaultcube.vcxproj -> C:\Users\Diyng\Documents\GitHub\AC-raytracing-graphics\bin_win32\ac_client.exe
+﻿  pch.cpp
+  audiomanager.cpp
+  autodownload.cpp
+  ac_bot.cpp
+  ac_bot_ai.cpp
+  bot.cpp
+  bot_ai.cpp
+  bot_util.cpp
+  bot_waypoint.cpp
+  botmanager.cpp
+  client.cpp
+  clientgame.cpp
+  clients2c.cpp
+  command.cpp
+  console.cpp
+  crypto.cpp
+  docs.cpp
+  editing.cpp
+  entities.cpp
+  http.cpp
+  log.cpp
+  Gerando Código...
+  Compilando...
+  main.cpp
+  menus.cpp
+  oggstream.cpp
+  openal.cpp
+  packetqueue.cpp
+  physics.cpp
+  rendercubes.cpp
+  rendergl.cpp
+C:\Users\Diyng\Documents\GitHub\AC-raytracing-graphics\source\src\rendergl.cpp(1139,11): warning C4189: 'y': variável local é inicializada mas não referenciada
+C:\Users\Diyng\Documents\GitHub\AC-raytracing-graphics\source\src\rendergl.cpp(1138,11): warning C4189: 'x': variável local é inicializada mas não referenciada
+  renderhud.cpp
+  rendermodel.cpp
+  renderparticles.cpp
+  rendertext.cpp
+  rndmap.cpp
+  scoreboard.cpp
+  server.cpp
+  serverbrowser.cpp
+  serverms.cpp
+  shadow.cpp
+  soundlocation.cpp
+  soundscheduler.cpp
+  Gerando Código...
+  Compilando...
+  stream.cpp
+  texture.cpp
+  water.cpp
+  weapon.cpp
+  world.cpp
+  worldio.cpp
+  worldlight.cpp
+  worldocull.cpp
+  worldrender.cpp
+  zip.cpp
+  Gerando Código...
+  protocol.cpp
+  tools.cpp
+  assaultcube.vcxproj -> C:\Users\Diyng\Documents\GitHub\AC-raytracing-graphics\bin_win32\ac_client.exe
