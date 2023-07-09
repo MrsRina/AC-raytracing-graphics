@@ -386,6 +386,18 @@ extern void drawscope(bool preload = false);
 extern float dynfov();
 extern int fog;
 
+#include <iostream>
+#include <vector>
+
+struct pipelinestageshader {
+    uint32_t stage{};
+    std::string srcorpath{};
+    bool issrc{};
+};
+
+extern bool readfilecontentasstring(const std::string& path, std::string& contentstringbuilder);
+extern bool createpipelineprogram(uint32_t& id, const char* ppipelineprogramname, const std::vector<pipelinestageshader>& pipelineprorgamshaderlist);
+
 // shadow
 extern bool addshadowbox(const vec &bbmin, const vec &bbmax, const vec &extrude, const glmatrixf &mat);
 extern void drawstencilshadows();

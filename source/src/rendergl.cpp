@@ -6,6 +6,9 @@
 
 bool hasTE = false, hasMT = false, hasMDA = false, hasDRE = false, hasstencil = false, hasST2 = false, hasSTW = false, hasSTS = false, hasAF;
 
+bool iscoreshadersinitialized = false;
+uint32_t overlayeffectpipelineprogram = 0;
+
 void *getprocaddress(const char *name)
 {
     return SDL_GL_GetProcAddress(name);
@@ -121,8 +124,13 @@ void gl_init(int w, int h, int depth, int fsaa)
     inittmus();
     resetcamera();
 
-    if (!postprocessinginitialized) {
-        postprocessinginitialized = true;
+    if (!iscoreshadersinitialized) {
+        iscoreshadersinitialized = true;
+        if (createpipelineprogram(overlayeffectpipelineprogram, "overlay.post.processing.fx", {
+            {GL_VERTEX_SHADER, "./packages/fx/vsh_overlay.post-processing.glsl"},
+            {GL_FRAGMENT_SHADER, "./packages/fx/fsh_overlay.post-processing.glsl"}
+            })) {
+        }
     }
 }
 
@@ -1138,16 +1146,6 @@ void gl_drawframe(int w, int h, float changelod, float curfps, int elapsed)
     undodynlights();
 
     // pompom
-    float x = 0.0f;
-    float y = 0.0f;
-
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glBegin(GL_QUADS);
-    glVertex2f(20.0f, 20.0f);
-    glVertex2f(220.0f, 20.0f);
-    glVertex2f(220.0f, 220.0f);
-    glVertex2f(20.0f, 220.0f);
-    glEnd();
 }
 
 #include <fstream>
@@ -1169,14 +1167,14 @@ bool readfilecontentasstring(const std::string& path, std::string& contentstring
     return true;
 }
 
-pipelineprogram::pipelineprogram(const std::vector<pipelineprogram::shader>& pipelineprogramshaderlist) {
+bool createpipelineprogram(uint32_t &id, const char *ppipelineprogramname, const std::vector<pipelinestageshader>& pipelineprogramshaderlist) {
     std::vector<uint32_t> compiledshaderlist{};
-    this->id = glCreateProgram();
+    id = glCreateProgram();
 
-    for (const pipelineprogram::shader& shaders : pipelineprogramshaderlist) {
+    for (const pipelinestageshader& shaders : pipelineprogramshaderlist) {
         std::string shadersrc{ shaders.srcorpath };
         if (!shaders.issrc && readfilecontentasstring(shadersrc, shadersrc)) {
-            std::cout << "Failed to read shader content from file '" << shaders.srcorpath << "\'\n";
+            conoutf("failed to compile shader from '%s' program:\n %s", shaders.srcorpath.c_str());
             break;
         }
 
@@ -1192,9 +1190,9 @@ pipelineprogram::pipelineprogram(const std::vector<pipelineprogram::shader>& pip
         if (signal == 0) {
             glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &signal);
 
-            GLchar* pinfologmsg = new GLchar[signal];
+            char* pinfologmsg = new GLchar[signal];
             glGetShaderInfoLog(shader, signal, nullptr, pinfologmsg);
-            std::cout << "Failed to compile shader: \n" << *pinfologmsg << '\n';
+            conoutf("failed to compile shader from '%s' program:\n %s", ppipelineprogramname, pinfologmsg);
             delete[] pinfologmsg;
 
             break;
@@ -1204,31 +1202,32 @@ pipelineprogram::pipelineprogram(const std::vector<pipelineprogram::shader>& pip
     }
 
     for (uint32_t& shaders : compiledshaderlist) {
-        glAttachShader(this->id, shaders);
+        glAttachShader(id, shaders);
         glDeleteShader(shaders);
     }
 
-    glLinkProgram(this->id);
+    glLinkProgram(id);
 
     int32_t signal{};
-    glGetProgramiv(this->id, GL_LINK_STATUS, &signal);
+    glGetProgramiv(id, GL_LINK_STATUS, &signal);
 
     if (signal == 0) {
-        glGetProgramiv(this->id, GL_INFO_LOG_LENGTH, &signal);
+        glGetProgramiv(id, GL_INFO_LOG_LENGTH, &signal);
 
         std::string infologmsg{};
         infologmsg.resize(signal);
 
-        GLchar* pinfologmsg = new GLchar[signal];
-        glGetProgramInfoLog(this->id, signal, nullptr, pinfologmsg);
-        std::cout << "Failed to link program: \n" << *pinfologmsg << '\n';
+        char* pinfologmsg = new GLchar[signal];
+        glGetProgramInfoLog(id, signal, nullptr, pinfologmsg);
+        conoutf("failed to link '%s' program:\n %s", ppipelineprogramname, pinfologmsg);
         delete[] pinfologmsg;
+
+        return true;
     }
     else {
-        std::cout << "A program was linked successfully!\n";
+        conoutf("'%s' program was linked successfully!", ppipelineprogramname);
+        return false;
     }
-}
 
-pipelineprogram::~pipelineprogram() {
-    glDeleteProgram(this->id);
+    return true;
 }

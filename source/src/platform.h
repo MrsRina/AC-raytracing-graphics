@@ -45,14 +45,8 @@
     #ifdef __APPLE__
         #undef SDL_VIDEO_DRIVER_WINDOWS
     #endif
+
 	#include <SDL_syswm.h>
-
-    #define GL_GLEXT_LEGACY
-    #define __glext_h__
-    #define NO_SDL_GLEXT
-    #include "GL/glew.h"
-    #undef __glext_h__
-
     #include "GL/glew.h"
 
     #ifdef __APPLE__

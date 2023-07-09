@@ -29,8 +29,6 @@
   physics.cpp
   rendercubes.cpp
   rendergl.cpp
-C:\Users\Diyng\Documents\GitHub\AC-raytracing-graphics\source\src\rendergl.cpp(1139,11): warning C4189: 'y': variável local é inicializada mas não referenciada
-C:\Users\Diyng\Documents\GitHub\AC-raytracing-graphics\source\src\rendergl.cpp(1138,11): warning C4189: 'x': variável local é inicializada mas não referenciada
   renderhud.cpp
   rendermodel.cpp
   renderparticles.cpp
